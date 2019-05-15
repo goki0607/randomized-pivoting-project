@@ -1,0 +1,9 @@
+*.log
+*.aux
+.DS_Store
+*.dvi
+*.bbl
+*.blg
+*.xml
+*.bcf
+**/_minted*/
