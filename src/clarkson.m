@@ -106,20 +106,13 @@ function [x,w,flag,its] = phase11(A,b)
     [W0,idx] = licols(A');
     x0 = W0' \ b(idx,:);
     S = A*x0-b;
-    %F = find(S >= 0);
     V = find(S < 0);
-    %nf = length(F);
     nv = length(V);
     P = zeros(n,nv);
     P(sub2ind(size(P),V,(1:nv)')) = 1;
     Ap = [A P; zeros(nv,d) eye(nv,nv)];
-    %Ap2 = [A(F,:) zeros(nf,nv); A(V,:) eye(nv,nv); zeros(nv,d) eye(nv,nv)];
     bp = [b; zeros(nv,1)];
-    %bp2 = [b(F,:); b(V,:); zeros(nv,1)];
     cp = sparse([zeros(d,1); ones(nv,1)]);
-    %rp = A(V,:)*x0-b(V,:);
-    %xp = [x0; -rp];
-    %wp = [idx; V];
     [xf,f,e,o] = linprog(cp,-Ap,-bp);
     its = o.iterations;
     if e == 0
@@ -129,19 +122,7 @@ function [x,w,flag,its] = phase11(A,b)
      else
        flag = 0;
      end
-    %{
-    elseif option >= 0 && option <= 3
-        [xf,f,w,its,flag] = simplex(wp,Ap,bp,xp,cp,option);
-    elseif option == 4
-        [xf,f,w,its,flag] = simplex_random_facet(wp,Ap,bp,xp,cp);
-    elseif option == 5
-        [xf,f,its,flag] = clarkson(Ap,bp,xp,cp);
-        w = find(A*xf(1:d)==b);
-    end
-    %}
     x = xf(1:d);
-    %w = w(1:d);
-    %[~,idx2] = licols(A(w,:)');
     wc = A*x==b;
     [B,~] = licols(A(wc,:)');
     [~,w] = intersect(A,B','rows');

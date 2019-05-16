@@ -1,0 +1,525 @@
+\documentclass{standalone}
+
+\begin{document}
+\subsection{Adlittle}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value   & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 3.936156 & 1043390.83920138 & 2701       & -1        & 0           \\
+Dantzig       & 3.729423 & 738366.178492967 & 2701       & -1        & 0           \\
+Steepest Edge & 9.236625 & 710766.082454923 & 2701       & -1        & 0           \\
+Random Edge   & 3.865459 & 589081.436255597 & 2701       & -1        & 0           \\
+Random Facet  & 1.607076 & 738366.178492958 & 2785       & -1        & 0           \\
+Clarkson      & 3.942862 & 1043390.83920138 & 2751       & -1        & 0           \\ \bottomrule
+\end{tabular}
+\caption{Results for the adlittle dataset.}\label{tab:adlittle}
+\end{table}
+
+\subsection{Afiro}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value        & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 0.404795 & 2.17368334004308e-14  & 1008       & -1        & 0           \\
+Dantzig       & 0.007775 & -455.961471428571     & 32         & 0         & 0           \\
+Steepest Edge & 0.59002  & -5.03349520404522e-31 & 1008       & -1        & 0           \\
+Random Edge   & 0.146859 & -455.961471428571     & 381        & 0         & 0           \\
+Random Facet  & 0.215206 & -4.47001826341646e-28 & 534        & 0         & 0           \\
+Clarkson      & 0.403302 & 2.17368334004308e-14  & 1025       & -1        & 0           \\ \bottomrule
+\end{tabular}
+\caption{Results for the afiro dataset.}\label{tab:afiro}
+\end{table}
+
+\subsection{Agg}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time  & Function Value   & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 51.594445 & 323796940.649623 & 8988       & -1        & 0           \\
+Dantzig       & 50.799613 & 323796940.649623 & 8988       & -1        & 0           \\
+Steepest Edge & 78.266193 & 323796940.649623 & 8988       & -1        & 0           \\
+Random Edge   & 58.345327 & 292918892.404989 & 8988       & -1        & 0           \\
+Random Facet  & 8.279151  & 323796940.649623 & 9081       & -1        & 0           \\
+Clarkson      & 51.353875 & 323796940.649623 & 9475       & -1        & 0           \\ \bottomrule
+\end{tabular}
+\caption{Results for the agg dataset.}\label{tab:agg}
+\end{table}
+
+\subsection{Agg2}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time   & Function Value   & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 167.723218 & 579187407.759519 & 12385      & -1        & 0           \\
+Dantzig       & 168.181058 & 1159041196.50807 & 12385      & -1        & 0           \\
+Steepest Edge & 241.135652 & 579187407.759519 & 12385      & -1        & 0           \\
+Random Edge   & 163.767261 & 263750464.889409 & 12385      & -1        & 0           \\
+Random Facet  & 19.353062  & 579187407.759519 & 12657      & -1        & 0           \\
+Clarkson      & 146.577901 & 579187407.759519 & 12969      & -1        & 0           \\ \bottomrule
+\end{tabular}
+\caption{Results for the agg2 dataset.}\label{tab:agg2}
+\end{table}
+
+\subsection{Agg3}
+\begin{table}[H]
+\begin{tabular}{@{}llllll@{}}
+\toprule
+Pivot Choice  & CPU Time   & Function Value   & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 147.379093 & 619945466.361699 & 12375      & -1        & 0           \\
+Dantzig       & 148.533825 & 620025415.381237 & 12375      & -1        & 0           \\
+Steepest Edge & 233.781978 & 619945466.361699 & 12375      & -1        & 0           \\
+Random Edge   & 154.851338 & 238775282.60111  & 12375      & -1        & 0           \\
+Random Facet  & 21.372841  & 619945466.361699 & 12630      & -1        & 0           \\
+Clarkson      & 153.088173 & 619945466.361699 & 12949      & -1        & 0           \\ \bottomrule
+\end{tabular}
+\caption{Results for the agg3 dataset.}\label{tab:agg3}
+\end{table}
+
+\subsection{Bandm}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time   & Function Value   & Iterations & Flag & Failure \\ \midrule
+Bland         & 476.15341  & 51.8461494058539 & 16168      & -1   & 0       \\
+Dantzig       & 507.130812 & 51.8461494058423 & 16168      & -1   & 0       \\
+Steepest Edge & 1.05909    & -Inf             & 642        & 1    & 1       \\
+Random Edge   & 8.244884   & -Inf             & 866        & 1    & 1       \\
+Random Facet  & 154.803401 & -Inf             & 16393      & 1    & 1       \\
+Clarkson      & 484.531418 & 51.8461494058539 & 16795      & -1   & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the bandm dataset.}
+\label{tab:bandm}
+\end{table}
+
+\subsection{Beaconfd}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value   & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 0.476425 & 34184.772295159  & 203        & 0         & 0           \\
+Dantzig       & 0.342401 & 34184.7722981787 & 186        & 0         & 0           \\
+Steepest Edge & 0.636872 & 34184.2760229194 & 216        & 0         & 0           \\
+Random Edge   & 0.402223 & 34184.7719741586 & 194        & 0         & 0           \\
+Random Facet  & 2.02303  & 34184.7722983032 & 4128       & 0         & 0           \\
+Clarkson      & 0.504298 & 34184.772295159  & 344        & 0         & 0           \\ \bottomrule
+\end{tabular}
+\caption{Results for the beaconfd dataset.}
+\label{tab:beaconfd}
+\end{table}
+
+\subsection{Blend}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value    & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 3.954742 & 0                 & 2863       & -1        & 0           \\
+Dantzig       & 0.153605 & -30.8121498458282 & 149        & 0         & 0           \\
+Steepest Edge & 7.267025 & 0                 & 2863       & -1        & 0           \\
+Random Edge   & 3.787269 & 0                 & 2863       & -1        & 0           \\
+Random Facet  & 1.276257 & 0                 & 2925       & -1        & 0           \\
+Clarkson      & 3.921273 & 0                 & 2895       & -1        & 0           \\ \bottomrule
+\end{tabular}
+\caption{Results for the blend dataset.}
+\label{tab:blend}
+\end{table}
+
+\subsection{Boeing1}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time   & Function Value    & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 314.992875 & 197.352975791393  & 14267      & -1        & 0           \\
+Dantzig       & 314.114266 & 199.105505791393  & 14267      & -1        & 0           \\
+Steepest Edge & 409.134049 & 198.578945791393  & 14267      & -1        & 0           \\
+Random Edge   & 343.44687  & -268.030633517596 & 14267      & -1        & 0           \\
+Random Facet  & 42.352087  & 199.105505791393  & 14571      & -1        & 0           \\
+Clarkson      & 316.871231 & 197.352975791393  & 14803      & -1        & 0           \\ \bottomrule
+\end{tabular}
+\caption{Results for the boeing1 dataset.}
+\label{tab:boeing1}
+\end{table}
+
+\subsection{Boeing2}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time  & Function Value    & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 18.085242 & -157.892018703069 & 5535       & -1        & 0           \\
+Dantzig       & 17.044042 & -157.892018703069 & 5535       & -1        & 0           \\
+Steepest Edge & 23.411929 & -168.017018703069 & 5535       & -1        & 0           \\
+Random Edge   & 18.083524 & -184.268296700969 & 5535       & -1        & 0           \\
+Random Facet  & 3.438899  & -157.892018703069 & 5635       & -1        & 0           \\
+Clarkson      & 18.039013 & -157.892018703069 & 5779       & -1        & 0           \\ \bottomrule
+\end{tabular}
+\caption{Results for the boeing2 dataset.}
+\label{tab:boeing2}
+\end{table}
+
+\subsection{Bore3d}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time   & Function Value      & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 153.725752 & 3370.38375552941    & 10971      & -1        & 0       \\
+Dantzig       & 128.734479 & 3370.38447479072    & 10971      & -1        & 0       \\
+Steepest Edge & 141.085359 & 3370.38375553658    & 10971      & -1        & 0       \\
+Random Edge   & 130.76862  & 5.1781912903004e+51 & 10971      & -1        & 1       \\
+Random Facet  & 13.54083   & 3370.38375552939    & 11151      & -1        & 0       \\
+Clarkson      & 153.988247 & 3370.38375552941    & 11051      & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the bore3d dataset.}
+\label{tab:bore3d}
+\end{table}
+
+\subsection{Brandy}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value   & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 0.000749 & 5820.29850499479 & 437        & 0         & 0           \\
+Dantzig       & 0.000142 & 5820.29850499479 & 437        & 0         & 0           \\
+Steepest Edge & 0.000153 & 5820.29850499479 & 437        & 0         & 0           \\
+Random Edge   & 0.000136 & 5820.29850499479 & 437        & 0         & 0           \\
+Random Facet  & 0.063135 & 5820.29850499479 & 594        & 0         & 0           \\
+Clarkson      & 0.036808 & 5820.29850499479 & 873        & 0         & 0           \\ \bottomrule
+\end{tabular}
+\caption{Results for the brandy dataset.}
+\label{tab:brandy}
+\end{table}
+
+\subsection{Capri}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time   & Function Value   & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 201.127048 & 4589.72924292783 & 12958      & -1        & 0           \\
+Dantzig       & 198.745903 & 4589.72924292783 & 12958      & -1        & 0           \\
+Steepest Edge & 214.392736 & 4590.57925052216 & 12958      & -1        & 0           \\
+Random Edge   & 200.87837  & 4589.72922101656 & 12958      & -1        & 0           \\
+Random Facet  & 11.058678  & 4590.57925052214 & 13119      & -1        & 0           \\
+Clarkson      & 200.458515 & 4589.72924292783 & 13395      & -1        & 0           \\ \bottomrule
+\end{tabular}
+\caption{Results for the capri dataset.}
+\label{tab:capri}
+\end{table}
+
+\subsection{Degen2}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time    & Function Value    & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 852.840857  & -1322.17266666667 & 18796      & -1        & 0       \\
+Dantzig       & 2191.575835 & -14872.8842358104 & 18796      & -1        & 0       \\
+Steepest Edge & 3713.44579  & -1322.17266666667 & 18796      & -1        & 0       \\
+Random Edge   & 154.417961  & -Inf              & 2501       & 1         & 1       \\
+Random Facet  & 68.363953   & -1322.17266666667 & 19310      & -1        & 0       \\
+Clarkson      & 1727.648622 & -1322.17266666667 & 20261      & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the degen2 dataset.}
+\label{tab:degen2}
+\end{table}
+
+\subsection{E226}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time   & Function Value   & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 133.737154 & 38.0310689159362 & 8624       & -1        & 0       \\
+Dantzig       & 131.170821 & 1147.85163696209 & 8624       & -1        & 0       \\
+Steepest Edge & 175.200388 & 38.0310689159245 & 8624       & -1        & 0       \\
+Random Edge   & 7.544327   & -Inf             & 853        & 1         & 1       \\
+Random Facet  & 14.302554  & 38.0310689159225 & 8851       & -1        & 0       \\
+Clarkson      & 111.164102 & 38.0310689159362 & 9047       & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the e226 dataset.}
+\label{tab:e226}
+\end{table}
+
+\subsection{Etamacro}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time    & Function Value         & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 1778.066747 & -675.432775178026      & 23198      & -1        & 0       \\
+Dantzig       & 1749.518247 & -679.27778195418       & 23198      & -1        & 0       \\
+Steepest Edge & 1866.91961  & -678.062526166985      & 23198      & -1        & 0       \\
+Random Edge   & 1743.514164 & -2.09683084197647e+119 & 23198      & -1        & 1       \\
+Random Facet  & 55.494937   & -677.385668465272      & 23547      & -1        & 0       \\
+Clarkson      & 1767.646174 & -675.432775178026      & 23745      & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the etamacro dataset.}
+\label{tab:etamacro}
+\end{table}
+
+\subsection{Farm}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 0.00056  & 39900          & 4          & 0         & 0           \\
+Dantzig       & 0.000366 & 39900          & 4          & 0         & 0           \\
+Steepest Edge & 0.000388 & 39900          & 4          & 0         & 0           \\
+Random Edge   & 0.000377 & 39900          & 4          & 0         & 0           \\
+Random Facet  & 0.008042 & 39900          & 23         & 0         & 0           \\
+Clarkson      & 0.010046 & 39900          & 6          & 0         & 0           \\ \bottomrule
+\end{tabular}
+\caption{Results for the farm dataset.}
+\label{tab:farm}
+\end{table}
+
+\subsection{Grow15}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time    & Function Value    & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 3197.351485 & -2096985.45666421 & 24901      & -1        & 0       \\
+Dantzig       & 97.410704   & -106870941.293575 & 891        & 0         & 0       \\
+Steepest Edge & 2838.851915 & 0                 & 24901      & -1        & 0       \\
+Random Edge   & 97.969691   & -Inf              & 932        & 1         & 1       \\
+Random Facet  & 67.124235   & 0                 & 25526      & -1        & 0       \\
+Clarkson      & 3243.78847  & -2096985.45666421 & 24901      & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the grow15 dataset.}
+\label{tab:grow15}
+\end{table}
+
+\subsection{Israel}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}llllll@{}}
+\toprule
+Pivot Choice  & CPU Time  & Function Value   & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 24.470204 & 7615577.32939396 & 4769       & -1        & 0       \\
+Dantzig       & 22.54268  & 7137671.02693493 & 4769       & -1        & 0       \\
+Steepest Edge & 30.235674 & 7615577.32939396 & 4769       & -1        & 0       \\
+Random Edge   & 27.266246 & 7092401.09510754 & 4769       & -1        & 0       \\
+Random Facet  & 6.544408  & 7137678.067149   & 4850       & -1        & 0       \\
+Clarkson      & 24.209742 & 7615577.32939396 & 4957       & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the israel dataset.}
+\label{tab:israel}
+\end{table}
+
+\subsection{Kb2}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value    & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 0.473169 & -1749.90012990621 & 229        & 0         & 0       \\
+Dantzig       & 0.28864  & -1749.9001299062  & 132        & 0         & 0       \\
+Steepest Edge & 3.594973 & -1749.90012990621 & 932        & 0         & 0       \\
+Random Edge   & 3.495352 & 0                 & 1501       & -1        & 0       \\
+Random Facet  & 1.074955 & 0                 & 1541       & -1        & 0       \\
+Clarkson      & 0.554344 & -1749.90012990621 & 229        & 0         & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the kb2 dataset.}
+\label{tab:kb2}
+\end{table}
+
+\subsection{Nsic1}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time    & Function Value    & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 1038.437963 & -49580.0000000002 & 14355      & -1        & 1       \\
+Dantzig       & 670.685615  & -91622.9999999995 & 14355      & -1        & 1       \\
+Steepest Edge & 850.942389  & -5542188          & 14355      & -1        & 0       \\
+Random Edge   & 26.9856     & -Inf              & 843        & 1         & 1       \\
+Random Facet  & 184.072833  & 0                 & 14799      & -1        & 1       \\
+Clarkson      & 632.397509  & -49580.0000000002 & 14629      & -1        & 1       \\ \bottomrule
+\end{tabular}
+\caption{Results for nsic1 dataset.}
+\label{tab:nsic1}
+\end{table}
+
+\subsection{Nsic2}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time   & Function Value & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 579.569388 & -49979         & 14647      & -1        & 0       \\
+Danztig       & 479.689338 & -486020        & 14647      & -1        & 0       \\
+Steepest Edge & 646.818398 & -499341        & 14647      & -1        & 0       \\
+Random Edge   & 50.397737  & -Inf           & 1818       & 1         & 1       \\
+Random Facet  & 49.89871   & -399           & 15074      & -1        & 0       \\
+Clarkson      & 572.584861 & -49979         & 15073      & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for nsic2 dataset.}
+\label{tab:nsic2}
+\end{table}
+
+\subsection{Recipe}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 0.256658 & -266.616       & 113        & 0         & 0       \\
+Danztig       & 0.147516 & -266.616       & 88         & 0         & 0       \\
+Steepest Edge & 0.218927 & -266.616       & 102        & 0         & 0       \\
+Random Edge   & 0.208822 & -266.616       & 102        & 0         & 0       \\
+Random Facet  & 1.690962 & -266.616       & 4584       & 0         & 0       \\
+Clarkson      & 0.283113 & -266.616       & 166        & 0         & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for recipe dataset.}
+\label{tab:recipe}
+\end{table}
+
+\subsection{Sc50a}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value    & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 1.243183 & -55.4518191591693 & 1661       & -1        & 0       \\
+Danztig       & 0.032066 & -64.5750770585645 & 47         & 0         & 0       \\
+Steepest Edge & 0.042618 & -64.5750770585645 & 51         & 0         & 0       \\
+Random Edge   & 0.034719 & -64.5750770585645 & 51         & 0         & 0       \\
+Random Facet  & 0.493815 & -64.5750770585645 & 1247       & 0         & 0       \\
+Clarkson      & 1.249279 & -55.4518191591693 & 1661       & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for sc50a dataset.}
+\label{tab:sc50a}
+\end{table}
+
+\subsection{Sc50b}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 0.041858 & -70            & 60         & 0         & 0       \\
+Danztig       & 0.040101 & -70            & 58         & 0         & 0       \\
+Steepest Edge & 0.049244 & -70            & 56         & 0         & 0       \\
+Random Edge   & 0.043537 & -70            & 63         & 0         & 0       \\
+Random Facet  & 0.561939 & -70            & 1433       & 0         & 0       \\
+Clarkson      & 0.053038 & -70            & 60         & 0         & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the sc50b dataset.}
+\label{tab:sc50b}
+\end{table}
+
+\subsection{Sc105}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value    & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 7.309537 & -50.774739937875  & 3561       & -1        & 0       \\
+Danztig       & 0.203841 & -52.2020612117072 & 105        & 0         & 0       \\
+Steepest Edge & 0.442597 & -52.2020612117072 & 160        & 0         & 0       \\
+Random Edge   & 0.278079 & -52.2020612117072 & 142        & 0         & 0       \\
+Random Facet  & 1.580061 & 0                 & 3610       & -1        & 0       \\
+Clarkson      & 7.236006 & -50.774739937875  & 3561       & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the sc105 dataset.}
+\label{tab:sc105}
+\end{table}
+
+\subsection{Sc205}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time  & Function Value    & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 43.573645 & -10.846181525569  & 7021       & -1        & 0       \\
+Danztig       & 1.582241  & -52.2020612117072 & 248        & 0         & 0       \\
+Steepest Edge & 3.186176  & -52.2020612117073 & 343        & 0         & 0       \\
+Random Edge   & 2.348221  & -52.2020612117072 & 368        & 0         & 0       \\
+Random Facet  & 3.221558  & 0                 & 7221       & -1        & 0       \\
+Clarkson      & 43.747345 & -10.846181525569  & 7021       & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the sc205 dataset.}
+\label{tab:sc205}
+\end{table}
+
+\subsection{Scagr7}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time  & Function Value    & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 14.706095 & -1704551.21968213 & 5094       & -1        & 0       \\
+Danztig       & 14.763084 & -1704551.21968213 & 5094       & -1        & 0       \\
+Steepest Edge & 20.907758 & -1704551.21968213 & 5094       & -1        & 0       \\
+Random Edge   & 0.061348  & -Inf              & 183        & 1         & 0       \\
+Random Facet  & 3.757515  & Inf               & 5150       & 1         & 0       \\
+Clarkson      & 14.567853 & -1704551.21968213 & 5257       & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the scagr7 dataset.}
+\label{tab:scagr7}
+\end{table}
+
+\subsection{Share2b}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value        & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 3.487865 & -324.202865741403     & 2808       & -1        & 0       \\
+Danztig       & 3.564655 & -334.296682340298     & 2808       & -1        & 0       \\
+Steepest Edge & 6.830906 & -324.202865741405     & 2808       & -1        & 0       \\
+Random Edge   & 0.576046 & -2.98747919928055e+42 & 567        & 0         & 0       \\
+Random Facet  & 1.381605 & -324.202865741405     & 2860       & -1        & 0       \\
+Clarkson      & 3.493717 & -324.202865741403     & 2945       & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the share2b dataset.}
+\label{tab:share2b}
+\end{table}
+
+\subsection{Stocfor1}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time  & Function Value    & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 8.487626  & -25468.6697284763 & 4043       & -1        & 0       \\
+Danztig       & 8.189625  & -25468.6697284763 & 4043       & -1        & 0       \\
+Steepest Edge & 11.316533 & -25468.6697284763 & 4043       & -1        & 0       \\
+Random Edge   & 0.255702  & -25468.6697284763 & 143        & 0         & 0       \\
+Random Facet  & 1.369028  & -25468.6697284847 & 2782       & 0         & 0       \\
+Clarkson      & 8.531733  & -25468.6697284763 & 4065       & -1        & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the stocfor1 dataset.}
+\label{tab:stocfor1}
+\end{table}
+
+\subsection{Vtpbase}
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+Pivot Choice  & CPU Time & Function Value   & Iterations & Exit Flag & Failure \\ \midrule
+Bland         & 0.000494 & 143152.061160208 & 215        & 0         & 0       \\
+Danztig       & 0.000107 & 143152.061160208 & 215        & 0         & 0       \\
+Steepest Edge & 0.000107 & 143152.061160208 & 215        & 0         & 0       \\
+Random Edge   & 0.000116 & 143152.061160208 & 215        & 0         & 0       \\
+Random Facet  & 0.055229 & 143152.061160208 & 350        & 0         & 0       \\
+Clarkson      & 0.025806 & 143152.061160208 & 429        & 0         & 0       \\ \bottomrule
+\end{tabular}
+\caption{Results for the vtpbase dataset.}
+\label{tab:vtpbase}
+\end{table}
+
+\end{document}

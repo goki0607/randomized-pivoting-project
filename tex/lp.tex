@@ -1,0 +1,36 @@
+\documentclass{standalone}
+
+\begin{document}
+
+We present a brief overview of linear programming definitions that will be used throughout the project. Furthermore, we provide an overall idea of the simplex method. For a more detailed treatment of the subject matter we suggest looking at \cite{nocedal2006numerical}, \cite{chvatal1983linear}, \cite{christos1982combinatorial} and \cite{dantzig2016linear} which are all excellent resources.\par
+This project considers a linear program in all-inequality form
+\begin{align}
+  &\text{minimize}\quad c^{T}x \nonumber\\
+  &\text{subject to}\quad Ax \ge B \nonumber
+\end{align}
+where $c^{T}$ is the $1\times d$ objective function vector which we wish to minimize, $A$ is the $n\times d$ matrix of inequality constraints and $B$ is the $n\times 1$ vector of lower bounds of the inequalities given in $A$. A point is $\bar{x}$ is said to be feasible if and only if
+\[
+  A\bar{x}\ge B
+\]
+and a feasible set/region is the set of all points $S$ such that
+\[
+  \forall \bar{x}\in S.\:A\bar{x}\ge B.
+\]
+A feasible region is bounded if the feasible set $S$ is finite and is unbounded if $S$ is infinite. Otherwise, if $S$ is empty then the problem is said to be infeasible meaning no solution exists.\par
+A constraint $a^{T}\in A$ is a row of $A$. The active set $\mathbb{A}$ of $A$ at $\bar{x}$ are the rows of $A$ such that each constraint in the active set is satisfied with equality $a_{i}^{T}\bar{x}=b_{i}$ and any constraint that is not satisfied with equality is inactive such that $a_{j}^{T}\bar{x}>b_{j}$. Any subset $W\subseteq\mathbb{A}$ such that the normals of each $a_{i}\in W$ form an independent basis for $\mathbb{R}^{m}$ is referred to as a working-set of size $m$. Given the consistent constraint $A\tilde{x}\ge B$, a point $\tilde{x}$ is a vertex if and only if $d$ linearly independent constraints are active at $\tilde{x}$. If exactly $n$ linearly independent constraints are active then the vertex is non-degenerate and if more than $d$ linearly independent constraints are active then the vertex is degenerate.\par
+The simplex method finds an optimal solution to a feasible linear programming problem if it exists and otherwise reports that the problem is unbounded. It does so by obtaining what are referred to as Lagrange multipliers which are the solution to the system of equations
+\[
+  W^{T}\lambda=c
+\]
+where $W$ is the $n\times d$ non-singular (by definition) matrix of the working set constraints at some feasible point $\hat{x}$. If all entries of the vector $\lambda$ are $\ge0$ then we say that $\hat{x}$ is a solution to the linear program. Otherwise, if there exists at least one component that is $<0$ then we can define a feasible search direction $\hat{p}$ that moves off the constraint corresponding to that multiplier and towards another constraint which defines a new working set $\tilde{W}$. This new working set also defines a new point $\tilde{x}$ which corresponds to a strictly lower value of the objective function. Furthermore, if we can take a step of infinity, i.e. there is no constraint blocking us from decreasing the objective function arbitrarily, then we say that objective function is unbounded from below and the solution to the problem is $-\infty$. A pivoting rule in this context helps us define which constraint to move off from if there are multiple candidates for removal and which one to add into the new working set if there are more than one blocking constraints.\par
+%The simplex method moves from vertex to vertex at each iteration until it can find an optimal point by checking for the optimality conditions given above. If the point is not optimal and there are more than one possible constraint we can move off from then we use a pivoting strategy to define the search direction. Furthermore, the pivoting strategy defines which constraint should be added into the working set if there are more than one candidates to enter the blocking set then the pivoting strategy also defines which one should be chosen.\par
+At a very high level, the simplex method moves from vertex to vertex of the polytope defined by the linear program until it finds an optimal solution or determines that the objective function is unbounded. As an additional note, degeneracy refers to when we have a degenerate vertex such that the working set of this vertex is ambiguously defined. The ambiguity arises from the fact that the working set must always be square to solve the system of equations for the search direction but the active set at a degenerate point is not square. Thus, there are many working sets we can choose from. This is problematic as it can lead to cycling and/or stalling where we simply cycle through all the active constraints at the degenerate point adding and removing them from the working set without making any progress.\par
+An all-inequality simplex method requires an intial feasible point $x_{0}$ that has a working set $W_{0}$ to begin the search process. The task of finding an initial feasible point can also be done by linear programming and this is referred to as Phase 1. While we skip over the details here, the code given in appendix \ref{appendix:evallp}{} demonstrates how we use a Phase 1 LP to find an initial feasible point. If the initial problem is infeasible then the Phase 1 LP will also be infeasible such that we can detect infeasibility at this stage. Then, if we find a feasible point, we continue onto Phase 2 to solve the actual problem using the $x_{0}$ obtained from Phase 1. An implementation of the simplex method is given in appendix \ref{appendix:simplex}{}. As can be seen, we keep iterating until the optimality conditions are met and at each iteration use a pivot strategy to find the search direction. The variable \verb|s| refers to the variable leaving the working set and \verb|t| refers to the variable entering the working set.\par
+Finally, for the sake of thoroughness, the dual of an all-inequality problem is given by the following linear program
+\begin{align}
+  &\text{minimize}\quad B^{T}\lambda \nonumber\\
+  &\text{subject to}\quad A^{T}\lambda = c,\:\lambda\ge 0 \nonumber
+\end{align}
+where $B^{T}$ is the $1\times n$ objective function vector which we wish to minimize, $A^{T}$ is the $d\times n$ matrix of equality constraints and $C$ is the $d\times 1$ vector of lower bounds of the inequalities given in $A$. A good treatment of duality theory is given in \cite{sierksma2001linear}.\par
+This project focues on the pivoting strategies that define \verb|s| and \verb|t| and complete the specification of the simplex method. The next section discusses various rules that will be considered for the project.
+\end{document}

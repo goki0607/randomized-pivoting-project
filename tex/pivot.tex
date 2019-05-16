@@ -1,0 +1,180 @@
+\documentclass{standalone}
+
+\begin{document}
+We consider three deterministic pivoting strategies, one randomized pivoting strategy and two simplex-like randomized algorithms. We begin by describing the deterministic pivoting rules.
+\subsection{Bland's Rules}
+\label{sec:pivot:bland}
+{
+  Bland's rules were introduced by Robert G Bland in \cite{bland1977new} to address the issue of cycling due to degeneracy and ensure the simplex method terminates in a finite number of steps. Rather than picking the entering and leaving variables with respect to some property of the linear program being solved, the indices of the constraints in the order they appear in the constraint matrix are considered. These rules are also referred to as ``least-index'' rules.\par
+  Given one step of a simplex iteration, let $\lambda$ be the Lagrange multipliers obtained in that iteration and $W$ the current working set. Then, after checking for the optimality conditions, define the set $\Lambda$ as
+  \[
+    \Lambda \triangleq \{i\:|\:\lambda_{i}<0\}
+  \]
+  and define the set $\omega$ as
+  \[
+    \omega \triangleq \{j_{i}\:|\:i\in\Lambda\land w_{j}\in W\}.
+  \]
+  $\Lambda$ is the set of indices that corresponds to the negative components of the Lagrange multipliers. Similarly, $\omega$ is the set of indices of the constraints in the working set $W$ which corresponds to the negative multipliers. If $\Lambda=\emptyset$ then we know that we are at an optimal point. Otherwise, we define the constraint $s$ to be removed as
+  \[
+    s = \min \omega
+  \]
+  so that we remove the smallest index in $\omega$. This corresponds to deleting the constraint with a negative multiplier and the smallest index in the original constraint numbering with respect to $A$. Next, we need to define how to add a constraint after finding the search direction using $s$. We let $S$ be the set of indices that are blocking at the current iteration so that we choose
+  \[
+    t = \min S.
+  \]
+  Note that if $S=\emptyset$ then the problem is unbounded. So we now add the smallest index in $S$ which is also the smallest index in the original constraint numbering with respect to $A$. We keep picking $s_{k}$ and $t_{k}$ for the simplex iterates $k$ until we either find an optimal vertex or discover that the program is unbounded.\par
+  Overall, Bland's rules are a simple strategy for selecting entering and leaving constraints by using a lexicographic ordering of the indices of $A$. It has the added benefit of resolving cycling and ensuring termination. However, the strategy is seldom used in practice as it does not perform as fast as some of the other rules which will be described. The worst-case complexity of this pivoting strategy is exponential and is shown with a slight modification to the Klee-Minty cube \cite{klee1972good} by \cite{murty1983linear}.
+}
+\subsection{Dantzig's Rule}
+\label{sec:pivot:dantzig}
+{
+  Dantzig's greedy rule is considered to be the original strategy for the simplex method proposed by George B Dantzig \cite{dantzig2016linear}. It is also sometimes called the textbook rule. Given the Lagrange multiplers $\lambda$ at a single iteration of the simplex method, we define the set $\Lambda$ as the set of negative components of $\lambda$
+  \[
+    \Lambda\triangleq\{\lambda_{i}\:|\:\lambda_{i}<0\}.
+  \]
+  Then the leaving constraint $s$ is defined as
+  \[
+    s=i\quad\text{where}\quad \lambda_{i}=\min \Lambda.
+  \]
+  This means that we pick the most negative multiplier which in turn maximizes the rate of decrease of objective value once the corresponding  constraint is removed. Let $p$ be the search direction obtained from $s$. Then the entering variable is defined from the set of blocking constraints $S$ where
+  \[
+    S\triangleq\{a_{i}^{T}p\:|\:a_{i}\:\text{is blocking at $x$ with direction $p$}\}
+  \]
+  such that $t$ is the index
+  \[
+    t=i\quad\text{where}\quad a_{i}p=\min S.
+  \]
+  If there is a tie then we pick the smallest index out of the tying constraints.\par
+  Dantzig's rule is simple to implement and known to be efficient in practice but can cycle in the case of degeneracy. Some good examples of linear programs that cycle are given in \cite{hall2004simplest} where it is also shown that for cycling to happen there must be at least four variables and six constraints in the linear program being solved. The rule's worst case complexity is exponential which was shown with the construction of the famous Klee-Minty hypercube \cite{klee1972good}. Yet, the method also works remarkably fast in practice with \cite{spielman2004smoothed} attempting to explain this behavior using smoothed analysis. Note that the analysis in \cite{spielman2004smoothed} is not for Dantzig's rule but the same principles are applicable (but not proven).
+}
+\subsection{Steepest Edge}
+\label{sec:pivot:steepest}
+{
+  Rather than picking the constraints that lead to the greatest absolute decrease in the objective value we can also consider picking the constraints that lead greatest decrease in the objective value with respect to the length of the edge the simplex method traverses. Dantzig's rule measures the rate of change of the objective function with respect to the old vertex $x$ and the new vertex $\bar{x}$. On the other hand, steepest edge measures the rate of change of the objective function with respect to the distance between the old vertex $x$ and the new vertex $\bar{x}$. So the leaving constraint in the case of steepest edge is defined using the set $\Sigma$ where
+  \[
+    \Sigma\triangleq\{\frac{\lambda_{i}}{\norm{p_{i}}}\:|\:Wp_{i}=e_{i}\land\lambda_{i}<0\},
+  \]
+  $W$ is the current working set matrix and $e_{i}$ is the vector of zeros with the $i$-th component set to $i$. The leaving constraint $s$ is
+  \[
+    s=i\quad\text{where}\quad \frac{\lambda_{i}}{\norm{p_{i}}}=\min \Sigma
+  \]
+  such that we end up picking the index that leads to the highest normalized reduction in the objective function. This is because if
+  \[
+    \frac{\lambda_{s}}{\norm{p_{s}}}\le\frac{\lambda_{j}}{\norm{p_{j}}}
+  \]
+  where $s\ne j$ and $\lambda_{s},\lambda_{j}<0$, then
+  \[
+    \frac{c^{T}p_{s}}{\norm{p_{s}}}\le\frac{c^{T}p_{j}}{\norm{p_{j}}}.
+  \]
+  While it may seem that we need to compute the solution to $k=\left|\Sigma\right|$ amount of systems, i.e. find $p_{i}$ for each $Wp_{i}=e_{i}$, algorithms given by \cite{goldfarb1977practicable} and \cite{forrest1992steepest} present various methods to efficiently compute the $\norm{p_{i}}$'s from one iteration to another. However, since we do not actually implement one of these schemes in appendix \ref{appendix:simplex} and stick to the naive solution of solving $k$ systems we will not be presenting the details of these methods here. After finding a search direction, the entering constraint $t$ is defined to be the same as in the case of Dantzig's rule.\par
+  Steepest edge is a popular pivoting rule as it is not effected by re-scaling any one of the variables in the linear program. \cite{hall2004simplest} shows that steepest edge may also cycle for certain examples and \cite{goldfarb1979worst} gives a construction for a linear program that causes the steepest edge pivoting rule to exhibit exponential time complexity.\par
+}
+We conclude our discussion of the deterministic pivoting strategies by directing the reader to the implementation of the simplex method given in appendix \ref{appendix:simplex}. The functions \verb|bland_out|, \verb|dantzig_out| and \verb|steepest_out| compute the leaving constraint index for the respective methods at each iteration. Similarly, the functions \verb|bland_in|, \verb|dantzig_in| and \verb|steepest_in| compute the entering constraint for the respective methods at each iteration. Further discussion on the implementation details is given in section \ref{sec:implementation}. We now turn our attention to randomized strategies.
+\subsection{Random Edge}
+\label{sec:pivot:randome}
+{
+  The simplest and most intuitive randomized simplex method is to pick the leaving and incoming constraints randomly so as to randomly pick an edge to traverse. The only requirement is that we decrease the value of the objective value so that we are always making progress randomly. While this strategy is not attributed to any specific paper, good descriptions of it can be found in \cite{gartner1995randomized} and \cite{gartner1998randomized}. We proceed as follows. Given the Lagrange multipliers $\lambda$ at a single iteration of the simplex method, we define
+  \[
+    \Lambda=\{\lambda_{i}\:|\:\lambda_{i}<0\}
+  \]
+  as the set of the negative components of $\lambda$. The leaving constraint $s$ is defined by first picking a random number $j$ uniformly from the integral range $[1,k]$ where $k=\left|\Lambda\right|$, i.e. $k$ is the size of $\Lambda$. Then $s$ is
+  \[
+    s = j\quad\text{where}\quad \lambda_{j}\in\Lambda
+  \]
+  such that the randomly obtained index $s$ corresponds to a negative component of the multiplier $\lambda$. Similarly, the entering constraint is defined from the set of blocking constraints $S$ where
+  \[
+    S\triangleq\{a_{i}^{T}p\:|\:a_{i}^{T}\:\text{is blocking at $x$ with direction $p$}\}
+  \]
+  and $l$ is picked uniformly at random from the range $[1,m]$ where $m=\left|\Lambda\right|$. So $t$ becomes
+  \[
+    t = l\quad\text{where}\quad a_{l}^{T}p\in\Lambda
+  \]
+  meaning we randomly pick one of the blocking constraints. Note that if $S=\emptyset$ then we have the same result as in the deterministic cases as we know that the objective function is unbounded from below. It is easy to see that the rule ends up randomly picking an edge that leads to a lower value of the objective function.\par
+  We point out that the description given here is not standard when compared to descriptions given in the literature. Gartner in \cite{gartner1995randomized} states that the random edge strategy should consider the set of all edges and then pick one randomly. However, this is inefficient as considering all possible edges would mean that we get a combinatorial explosion in terms of the set of search directions considered. Rather than computing all edges and then randomly picking one we choose to randomly generate one edge which is equivalent in terms of the end goal but more efficient as we only solve one system of linear equations to obtain a search direction. While we realize that this is probably not what Gartner meant when describing the strategy, it is still important to point out the distinction.\par
+  In terms of theoretical complexity, only exponential upper bounds are known for the random edge strategy \cite{hansen2014improved} \cite{gartner2007two}. The reason for this is that proofs on worst-case complexity for random edge are difficult to do. However, there is plenty of work on showing lower bounds which can at times be quadratic for certain linear programs \cite{hansen2014improved}. It is believed that random edge does indeed behave better than deterministic strategies but definitive evidence for this claim does not exist as of now.\par
+  On a more practical level, we would like to point out that the literature on random edge almost always assumes non-degeneracy such that these results rely on the fact there will be no cycling. While this is fine for proving worst-case time bounds we discuss what may happen in a practical setting if a cycle exists in a linear program. We attempt to show that the random edge strategy may cycle in the case of degenaracy but will do so with smaller probability each time it takes a cycling path. Let $\delta$ be a sequence of working sets such that if we start at $\delta_{1}$ and move to $\delta_{2}$ then we cycle with some length $n$ and end up back at $\delta_{1}$ again. So $\delta$ is the sequence
+  \[
+    \delta=\delta_{1}\delta_{2}\dots\delta_{n}\delta_{1}=W_{1}W_{2}\dots W_{n}W_{1}.
+  \]
+  It is clear that to get from $W_{1}$ to $W_{2}$ we must move off of a specific constraint in $W_{1}$ and add a specific constraint to get $W_{2}$. The same argument applies for the rest of the sequence. For the sake of simplicity assume we start the simplex method at $W_{1}$ with the degenerate non-optimal vertex $x_{1}$. Let the active set at $x_{1}$ be of size $m$ and the size of the working set $W_{1}$ be of size $d$ where $d<m$ by the assumption of degeneracy. Then with at most probability $\frac{1}{d}$ we remove the specific constraint that leads to a cycle. By assuming that there is only one entering constraint, we will then move to $W_{2}$ with probability $1$. We then assume once we enter $W_{2}$ we will definitely cycle. Once we get back to $W_{1}$ the probability of cycling twice becomes
+  \[
+    (\frac{1}{d})^{2}
+  \]
+  so the probability of cycling $n$ times is
+  \[
+    (\frac{1}{d})^{n}
+  \]
+  which approaches $0$ as $n$ approaches $\infty$. This reasoning generalizes to the case where there may be many constraints following $W_{2}$ that may lead to the cycle or escape the cycle. In this case, the probability of entering the cycle continually will get even smaller. Note that we know there always exists a sequence of constraints that allow us to resolve cycling due to the proof of termination of Bland's rule \cite{bland1977new}. Thus, we conclude that a random edge simplex strategy may cycle but will do with smaller probability at each cycling iteration, i.e. when the sequence of the cycle ends. This is clearly better than Dantzig's rule and the steepest edge rule as the probability of cycling in those cases are $1$ once we enter the cycle. The random edge rule may cycle but the cycling should degenerate over time.\par
+}
+\subsection{Random Facet}
+\label{sec:pivot:randomf}
+{
+  In contrast to random edge, there are also a group of randomized algorithms referred to as random facet. All such random facet methods have provable sub-exponential worst-case run-times. Kalai in \cite{kalai1992subexponential} introduces a randomized simplex algorithm that runs in sub-exponential time. Similarly, Matousek, Sharir and Welzl introduce a different algorithm in \cite{matouvsek1996subexponential} which is also shown to be sub-exponential. Following these two advancements, Goldwasser in \cite{goldwasser1995survey} shows the surprising result that these algorithms are the dual of each other despite the fact that they are derived in very different ways. For this project we will present a version of random facet given by \cite{hansen2015improved}. Note that \cite{hansen2015improved} also gives an improved version of random facet but for the sake of simplicity we stick to the basic random facet and only make a slight improvement to it.\par
+  A facet is a constraint that is included in the working set constraint matrix $W$ at some vertex $x$. So the active set constraint matrix $W$ is the set of facets of $x$. It is a well known fact that at least one solution to a linear programming problem lies on a vertex if an optimal objective function value exists \cite{hansen2015improved}. An edge from vertex $x$ to $x'$ can be defined by removing a facet from $W$ and adding a new constraint $f'\notin W$ such that we get the new working set matrix
+  \[
+    W'= W \setminus \{f\} \cup \{f'\}
+  \]
+  where $f'$ becomes a facet of $x'$. If the problem is unbounded then $f'$ may define a ray but we assume for the sake of simplicity that the problems we are dealing with are bounded. If the objective function value at $x'$ with $W'$ is less than the objective function value at $x$ with $W$ then we take a pivoting step from $x$ to $x'$. Furthermore, we say that $W^{*}$ is optimal if and only if no pivot steps can be taken at the point $x^{*}$ defined by $W^{*}$. The pair $(F,B)$ is a pair of sets of constraints where $F$ is the set of all inequality constraints in our problem and $B$ is the set of active constraints when we start the random facet method. So only constraints in $F\cap B$ are candidates for a pivoting step such that
+  \[
+    \left|F\cap B\right|=d'
+  \]
+  defines a smaller linear program of size $d'$ variables with constraints $B\setminus F$ which is equivalent to the intial linear program \cite{hansen2015improved}.\par
+  The central idea of the random facet algorithm is as follows. Given a starting working set $B$ we choose randomly a facet $f\in F\cap B_{0}$ and recursively find the optimal vertex from all the vertices that have $f$ as a constraint. This means we reduce the size of the linear program and the inequality of $f$ is replaced by equality. If the vertex we find is optimal then we exit the program. However, if it is not optimal then it must be that $f$ should not be active so $f$ must leave the working set. In this case $f$ must be exchanged with some new $f'$ such that we get a new working set matrix $B'$. This reasoning leads to us obtaining the algorithm given in \cite{hansen2015improved}. The presentation below also makes a slight modification.
+  \begin{center}
+    \begin{algorithmic}
+      \Function{RandomFacet}{$F$,$B_{0}$}
+        \If{$F\cap B_{0}=\emptyset$}
+          \Return $B_{0}$
+        \Else
+          \State $f\gets $\Call{Random}{$F\cap B_{0}=\emptyset$}
+          \State $B_{1}\gets $\Call{RandomFacet}{$F\setminus\{f\}$,$B_{0}$}
+          \State $B_{2}\gets $\Call{Pivot}{$F$,$B_{1}$,$f$}
+          \If{$B_{1}$ is optimal}
+            \Return $B_{1}$
+          \ElsIf{$B_{1}\ne B_{2}$}
+            \Return \Call{RandomFacet}{$F\setminus\{f\}$,$B_{2}$}
+          \Else
+            \:\Return $B_{1}$
+          \EndIf
+        \EndIf
+      \EndFunction
+    \end{algorithmic}
+  \end{center}
+  We see that \textsc{RandomFacet} is a recursive function that takes the set of inequality constraints $F$ and the set of active contraints $B_{0}$ at $x_{0}$. If $F\cap B_{0}=\emptyset$ then $B_{0}$ is the optimal solution of that problem. Otherwise, we select a random facet from $f=F\cap B_{0}$ and recursively call \textsc{RandomFacet} with $f$ removed from $F$. This will give us the solution to the sub-problem defined by the removal which will be assigned to $B_{1}$. Next, we try to perform a simplex pivot by removing $f$ from $B_{1}$ and getting a new working set matrix $B_{2}$. If we cannot remove $f$ then $B_{1}$ must be equal to $B_{2}$ such that $B_{1}$ is an optimal solution to the larger problem. Otherwise, $f$ cannot be active so we remove it from $F$ and solve the problem with the working set matrix $B_{2}$ that has a lower objective function value. We know $B_{2}$ has a lower objective function value as a pivot must have been successful such that $B_{1}\ne B_{2}$. The function \textsc{Pivot} does a simplex pivot from $B_{1}$ by removing $f$ if $f$ corresponds to a negative multiplier. While the leaving constraint is well defined, i.e. it has to be $f$ if $f$ is not optimal, the choice entering constraint is left to the user. We decide to uniformly randomly pick one blocking constraint from the set of blocking constraints. The \textsc{Random} function removes a facet from the intersection uniformly at random.\par
+  As an improvement, we add the check for whether $B_{1}$ is optimal as it is not specified whether the \textsc{Pivot} function actually checks for the optimality of the whole solution or just the optimality of $f$. If it does the latter then we would require more recursive calls to terminate but since the pivot already obtains the multipliers $\lambda_{1}$ associated with $B_{1}$, we can actually check whether $B_{1}$ is globally optimal rather than the local optimality property of $f$. If $B_{1}$ is optimal then we terminate the recursion early leading to some gains in efficiency.\par
+  This version of the algorithm is proven to run in sub-exponential time in the worst-case by Kalai in \cite{kalai1992subexponential} and a simpler proof is available in \cite{hansen2015improved}. We skip the details here but note that the proof involves defining a recurrence relation which is a function over the number of variables and constraints of the linear program. This relation models the expected number of recursive calls the algorithm makes such that we get an upper bound on the number of pivoting steps performed which turns out to be sub-exponential.\par
+  Overall, random facet can be considered as a specialization of the generic simplex method \cite{hansen2015improved}. This is because the algorithm proceeds just like the simplex method by considering multiple vertices and finding an optimal one but rather than obtaining a search direction from the Lagrange multipliers at a vertex, it eliminates the constraints that are not active at an optimal point. If a good random choice is made then it seems that the algorithm should terminate fairly quickly.\par
+  Finally, just like for the case of random edge, we reason about what happens if a vertex is degenerate. In this case we actually do not get any cycling as random facet eliminates constraints while also attempting to pivot rather than finding a specific search direction from the Lagrange mutlipliers. Thus, the random facet algorithm will discard the constraints at a degenerate vertex rather quickly as long as that vertex is not optimal. If we sample the active constraints at an non-optimal degenerate vertex one after the other then we will throw them away one by one. If the degenerate vertex is optimal then the algorithm will simply return that point and terminate. Therefore, the random facet algorithm does not cycle.\par
+}
+The implementation for random edge can be found in appendix \ref{appendix:simplex} where the functions \verb|random_out| and \verb|random_in| carry out the random edge constraint deletion and addition, respectively. For random facet we implement a new function given in appendix \ref{appendix:randfacet} which is the instantiation of the algorithm given in section \ref{sec:pivot:randomf}. More details on the implementation can be found in section \ref{sec:implementation}. We move onto describing an unique subexponential randomized algorithm given by Ken Clarkson in \cite{clarkson1995vegas} as our final pivoting strategy.
+\subsection{Clarkson's Algorithm}
+\label{sec:pivot:clarkson}
+{
+  Clarkson presents $4$ algorithms in \cite{clarkson1995vegas} ``for linear programming and integer programming when the dimension is small.'' That is, if the number of constraints is much greater than the number of variables then Clarkson's algorithm works in sub-exponential time in the worst case. The first $2$ of Clarkson's algorithms are for linear programming while the next $2$ are for integer programming. We focus only on the first one.\par
+  Clarkson begins with a description of linear programming similar to the one given in section \ref{sec:lp}. The main assumption is that the feasible region is non-empty and there is a unique solution to the linear program. Even if the objective function is unbounded, a unique solution can be defined where one possible value is $-\infty$.\par
+  The first algorithm depends on the fact that the optimal value of a linear program is always unique and is only determined by $d$ or fewer constraints of $A$ \cite{clarkson1995vegas}. That is, there must always be $d$ active constraints at an optimal solution but some of these constrains can be trivially active. All other constraints are either strictly satisfied in the case of non-degeneracy and otherwise there is a mix of active and non-active constraints. Inactive constraints are considered to be redundant in the sense that if they were to be removed from $A$ the optimal value for the linear program would not change. Thus, Clarkson's first algorithm attempts to build a set $V^{*}$ which is a subset of $A$ that collects only the constraints that are important for solving the problem. It does this by checking which constraints are violated at a point obtained by solving a smaller problem and building the set $V$ of violated constraints. If some constraints are violated then they must be important so we proceed to add them into $V^{*}$. If the constraints are not violated then we know they are not important and can discard them. Both the size $V^{*}$ and $V$ are bounded such that the algorithm can quickly throw away unimportant constraints. If the problem is small enough then the algorithm calls $x^{*}_{s}(S)$ which solves a linear program of size $\le 9d^{2}$ and this is the base case for the recursion. We finally terminate when $V$ is empty such that no constraints are violated. The pseudocode for the algorithm is given below. Clarkson refers to the set of constraints as $S$ rather than $A$.
+  \begin{algorithmic}
+    \Function{Clarkson1}{S}
+      \State $V^{*}\gets\emptyset$
+      \State $C_{d}\gets 9d^{2}$
+      \If{$n\le C_{d}$}
+        \Return $x^{*}_{s}(S)$
+      \EndIf
+      \Repeat
+        \State choose $R \subset S\setminus V^{*}$ at random
+        \State $r\gets\left|R\right|=d\sqrt{n}$
+        \State $x^{*}\gets$\Call{Clarkson1}{$R\cup V^{*}$}
+        \State $V\gets\{H\in S\:|\:x^{*}\text{ violates }H\}$
+        \If{$\left|V\right|\le2\sqrt{n}$}
+          \State $V^{*}\gets V^{*}\cup V$
+        \EndIf
+      \Until{$V=\emptyset$}
+      \State \Return $x^{*}$
+    \EndFunction
+  \end{algorithmic}
+  Note how the bounds on both the size of $R$ and $V$ work to build $V^{*}$ such that $V^{*}$contains no more than $O(d\sqrt{n})$ elements \cite{clarkson1995vegas} so that we throw away most, but not all, of the constraints that are redundant. For his second algorithm, Clarkson uses a similar reasoning but instead of throwing away redundant constraints, everytime a constraint is found to be important, i.e. violated, the probability of sampling that constraint from $S$ is increased. This way the algorithm attempts to pick random constraints from $S$ until it finds the optimal point and as the probability of picking the important constraints increases, the algorithm will converge to picking them rather than the unimportant ones. We skip the implementation details of the second algorithm as it its not pertinent to this project.\par
+  Both of Clarkson's linear programming algorithms are proven to exhibit in the worst case sub-exponential time complexity. In the proofs given in \cite{clarkson1995vegas} the function $x^{*}_{S}$ is assumed to be the simplex method. So in the implementation given in appendix \ref{appendix:clarkson} we use the simplex method with Bland's anti-cycling rules. Thus, the theoretical worst-case run-time of the implemented algorithm is also sub-exponential. Our main goal is to test whether this probabilistic approach of constraint elimination is effective in solving linear programs. Since we skip over the details of the proofs given by Clarkson, we refer the reader to \cite{clarkson1995vegas}.\par
+  As a final note, Clarkson's proof of the sub-exponential run-time also considers the case of degeneracy. In the case of degenaracy either a small pertubation can be introduced or a rule that relies on lexicographic ordering such as Bland's rules can be used. Since we opt for the latter our algorithm is gauranteed not to cycle while in Clarkson's proof pertubations are chosen to obtain a non-degenerate linear program \cite{charnes1952optimality} \cite{clarkson1995vegas}. Overall, degeneracy is not an issue in Clarkson's algorithms.\par
+}
+We have seen three deterministic algorithms and three randomized algorithms that either specialize the simplex method or complete it by specifying the pivoting strategy. Their strengths and weaknesses have been discussed with the primary strengths of randomized algorithms being that they are less effected by degeneracy and could theoretically perform better than their deterministic counterparts with a good random pivot choice. On the other hand, the deterministic algorithms provide a clear framework to construct proofs and reason about the simplex iterates, and are known to work well in linear programming solvers. The deterministic pivots can be considered classical in the sense that they rely on the mechanism of the simplex algorithm to find an optimal vertex. On the other hand, random facet and Clarkson's algorithm rely on more general facts about a linear program to obtain simplex-like algorithms that achieve the same end goal. Randomized methods are seldom-used in practice so we wish to test whether they live up to their theoretical potential.
+\end{document}

@@ -1,10 +1,4 @@
 function test()
-    %files = {'beaconfd'; 'cari'; 'farm'; 'itest6'; ...
-    %    'klein2'; 'nsic1'; 'nsic2'; 'osa-07'; 'osa-14'; ...
-    %    'osa-30'; 'rosen1'; 'rosen2'; 'rosen8'; 'rosen10'; ...
-    %    'sc205'; 'scfxm1'; 'sctap2'; 'sctap3'};
-    %files = {'boeing2'};
-    %files = {'beaconfd'};
     files = dir('../tests/*.mps');
     in = files(1).folder;
     rows = {'danzig'; 'bland'; 'steepest'; 'randedge'; ...
@@ -15,7 +9,6 @@ function test()
     success = {};
     failure = {};
     for i=1:length(files)
-        %file = char(fullfile(in,strcat(files(i),mps)));
         name = files(i).name;
         file = strcat(in,strcat('/',name));
         p = mpsread(file);

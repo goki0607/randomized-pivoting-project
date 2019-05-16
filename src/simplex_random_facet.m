@@ -118,7 +118,6 @@ function [B,x,flag,optimal] = pivot(~,B1,f,x0)
         flag = 1;
         return
     end
-    % t = min(S);
     t = random_in(S);
     if t == -1
         B = B1;

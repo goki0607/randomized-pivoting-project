@@ -1,0 +1,114 @@
+\documentclass [12pt]{article}
+\textheight     8.5in
+\textwidth      6.5in
+\topmargin        0in
+\oddsidemargin  0in
+\evensidemargin 0in
+\baselineskip 15pt
+
+\usepackage{amsfonts}
+\usepackage{amssymb,amsmath,amstext}
+\usepackage[toc,page]{appendix}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{float}
+%\usepackage{cite}
+\usepackage{color}
+\usepackage{diagbox}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{standalone}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{minted}
+\usepackage[style=numeric,backend=biber,sorting=ynt]{biblatex}
+%\defbibheading{bibliography}[\centering\refname]{%
+  %\section*{#1}}%}
+  %\markboth{LLL}{ }}
+\addbibresource{mybib.bib}
+
+\usepackage{hyperref}
+
+\pagestyle{headings}
+\thispagestyle{empty}
+
+\definecolor{mygreen}{RGB}{28,172,0}
+\definecolor{mylilas}{RGB}{170,55,241}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\bracks}[1]{\lbrack#1\rbrack}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+\begin{document}
+
+\title{Experimental Evaluation of Randmozed Pivoting\\Rules for the Simplex Method}
+\author{Goktug Saatcioglu}
+\date{\today}
+\maketitle
+
+\begin{abstract}
+This project explores randomized pivoting strategies for the simplex method and experimentally evaluates their effectiveness against deterministic strategies. The study shows that randomization has the potential to be an effective alternative to current pivoting rules but numerical stability must also be considered. Possible directions for future work are also highlighted.
+\end{abstract}
+
+\bigskip
+
+\section{Introduction}
+\label{sec:intro}
+\input{tex/intro.tex}
+\section{Linear Programming Overview}
+\label{sec:lp}
+\input{tex/lp.tex}
+\section{Pivoting Rules}
+\label{sec:pivot}
+\input{tex/pivot.tex}
+\section{Implementation Details}
+\label{sec:implementation}
+\input{tex/implementation.tex}
+\section{Experiments and Analysis}
+\label{sec:experiments}
+\input{tex/experiment.tex}
+\section{Evaluation}
+\label{sec:eval}
+\input{tex/eval.tex}
+\section{Conclusion}
+\label{sec:conc}
+\input{tex/conc.tex}
+\newpage
+\printbibliography[heading=bibnumbered,title={References}]
+
+
+\newpage
+\begin{appendices}
+	\section{Main Function for Testing}
+	\label{appendix:test}
+  \inputminted[linenos,breaklines]{matlab}{src/test.m}
+  \section{Function to Solve a Two-Phase LP}
+  \label{appendix:evallp}
+  \inputminted[linenos,breaklines]{matlab}{src/evallp.m}
+  \section{The Simplex Method with Various Pivoting Rules}
+  \label{appendix:simplex}
+  \inputminted[linenos,breaklines]{matlab}{src/simplex.m}
+  \section{The Random Facet Method}
+  \label{appendix:randfacet}
+  \inputminted[linenos,breaklines]{matlab}{src/simplex_random_facet.m}
+  \section{Clarkson's First Algorithm}
+  \label{appendix:clarkson}
+  \inputminted[linenos,breaklines]{matlab}{src/clarkson.m}
+  \section{Rank Estimation of a Matrix}
+  \label{appendix:rank}
+  \inputminted[linenos,breaklines]{matlab}{src/licols.m}
+  \section{Results}
+  \label{appendix:results}
+  \input{tex/results.tex}
+\end{appendices}
+
+\end{document}
